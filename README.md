@@ -6,50 +6,50 @@
     <img src="https://img.shields.io/badge/platforms-iOS_13_|macOS_10.15_| watchOS_6.0-blue.svg" alt="SwiftUI" />
     <img src="https://img.shields.io/badge/Swift-5.1-orange.svg" alt="Swift 5.1" />
     <img src="https://img.shields.io/badge/SwiftPM-compatible-green.svg" alt="Swift 5.1" />
-    <img src="https://img.shields.io/github/followers/kieranb662?label=Follow" alt="kieranb662 followers" />
+    <img src="https://img.shields.io/github/followers/hotgulabjamun?label=Follow" alt="hotgulabjamun followers" />
 </p>
 
-**Sliders** is a compilation of all my stylable drag based SwiftUI components. It provides a variety of unique controls as well as an enhanced version of the normal `Slider` called an `LSlider`. You can try them all out quickly by clone the example [project](https://github.com/kieranb662/SlidersExamples)
+**Sliders** is a compilation of all my stylable drag based SwiftUI components. It provides a variety of unique controls as well as an enhanced version of the normal `Slider` called an `LSlider`. You can try them all out quickly by clone the example [project](https://github.com/hotgulabjamun/SlidersExamples)
 
 <p align="center">
-    <img src="https://github.com/kieranb662/SlidersExamples/blob/master/Sliders%20Media/SlidersCollage.PNG" alt="Activity Rings Gif" >
+    <img src="https://github.com/hotgulabjamun/SlidersExamples/blob/master/Sliders%20Media/SlidersCollage.PNG" alt="Activity Rings Gif" >
 </p>
 
 
 
 
 
-The various components are: 
+The various components are:
 * `LSlider` - a spatially adaptive slider that fits to its container at any angle you decide.
-* `RSlider` - A circularly shaped slider which restricts movement of the thumb to the radius of the circle 
+* `RSlider` - A circularly shaped slider which restricts movement of the thumb to the radius of the circle
 * `PSlider` - Turn any `Shape` into its very own slider!
-* `OverflowSlider` - A meter like slider which has two moving components, the track and the thumb. Also has velocity based gestures implemented 
-* `TrackPad` - A 2D version of a normal slider, which restricts displacement of the thumb to the bounds of the track 
-* `RadialPad` - A joystick like component that does not reset the position of the thumb upon gesture end. 
+* `OverflowSlider` - A meter like slider which has two moving components, the track and the thumb. Also has velocity based gestures implemented
+* `TrackPad` - A 2D version of a normal slider, which restricts displacement of the thumb to the bounds of the track
+* `RadialPad` - A joystick like component that does not reset the position of the thumb upon gesture end.
 * `Joystick` - an onscreen joystick that can appear anywhere the user drags within the defined hitbox, if the drag ends inside the lockbox, the joystick remains onscreen locked in the forward position. if the drag ends **not** inside the lockbox the joystick fades away until the hitbox is dragged again.
 
 
 
-## Requirements 
+## Requirements
 
 **Sliders** as a default requires the SwiftUI Framework to be operational and since the `DragGesture` is required only these platforms can make use of the library:
 
-* macOS 10.15 or Greater 
-* iOS 13 or Greater 
+* macOS 10.15 or Greater
+* iOS 13 or Greater
 * watchOS 6 or Greater
 
 ## How To Add To Your Project
 
-1. Snag that URL from the github repo 
-2. In Xcode -> File -> Swift Packages -> Add Package Dependencies 
+1. Snag that URL from the github repo
+2. In Xcode -> File -> Swift Packages -> Add Package Dependencies
 3. Paste the URL Into the box
 4. Specify the minimum version number (This is new so 1.0.3 and greater will work).
 
-## Dependencies 
+## Dependencies
 
-* [CGExtender](https://github.com/kieranb662/CGExtender)
-* [Shapes](https://github.com/kieranb662/Shapes) - Currently looking for contributors 
-* [bez](https://github.com/kieranb662/bez)
+* [CGExtender](https://github.com/hotgulabjamun/CGExtender)
+* [Shapes](https://github.com/hotgulabjamun/Shapes) - Currently looking for contributors
+* [bez](https://github.com/hotgulabjamun/bez)
 
 ## LSlider
 
@@ -68,7 +68,7 @@ The various components are:
 ### Styling The Slider
 
  To create a custom style for the slider you need to create a `LSliderStyle` conforming struct. Conformance requires implementation of 2 methods
- 
+
  1. `makeThumb`: which creates the draggable portion of the slider
  2. `makeTrack`: which creates the track which fills or empties as the thumb is dragging within it
 
@@ -108,7 +108,7 @@ The various components are:
 
 ## Radial Slider
 A Circular slider whose thumb is dragged causing it to follow the path of the circle
- 
+
  - **parameters**:
     - `value`: a  `Binding<Double>` value to be controlled.
     - `range`: a `ClosedRange<Double>` denoting the minimum and maximum values of the slider (default is `0...1`)
@@ -117,14 +117,14 @@ A Circular slider whose thumb is dragged causing it to follow the path of the ci
 ### Styling The Slider
 
  To create a custom style for the slider you need to create a `RSliderStyle` conforming struct. Conformance requires implementation of 2 methods
- 
+
 1.  `makeThumb`: which creates the draggable portion of the slider
 2.  `makeTrack`: which creates the track which fills or emptys as the thumb is dragging within it
 
 Both methods provide access to state values of the radial slider thru the  `RSliderConfiguration` struct
 
   ````Swift
-  
+
        struct RSliderConfiguration {
            let isDisabled: Bool // whether or not the slider is current disables
            let isActive: Bool // whether or not the thumb is dragging or not
@@ -134,11 +134,11 @@ Both methods provide access to state values of the radial slider thru the  `RSli
            let min: Double // The minimum value of the sliders range
            let max: Double // The maximum value of the sliders range
        }
-       
+
   ````
    To make this easier just copy and paste the following style based on the `DefaultRSliderStyle`. After creating your custom style
    apply it by calling the `radialSliderStyle` method on the `RSlider` or a view containing it.
- 
+
  ````Swift
  struct <#My Slider Style #>: RSliderStyle {
      func makeThumb(configuration:  RSliderConfiguration) -> some View {
@@ -158,7 +158,7 @@ Both methods provide access to state values of the radial slider thru the  `RSli
  }
 ````
 ## Path Slider
- A View that turns any `Shape` into a slider. Its great for creating unique user experiences 
+ A View that turns any `Shape` into a slider. Its great for creating unique user experiences
 
  - **parameters**:
      - `value`: a `Binding<Double>` value which represents the percent fill of the slider between  (0,1).
@@ -169,7 +169,7 @@ Both methods provide access to state values of the radial slider thru the  `RSli
 ### Styling The Slider
 
  To create a custom style for the slider you need to create a `PSliderStyle` conforming struct. Conformance requires implementation of 2 methods
- 
+
 1. `makeThumb`: which creates the draggable portion of the slider
 2. `makeTrack`: which creates the track which fills or empties as the thumb is dragging within it
 
@@ -210,7 +210,7 @@ Both methods provide access to state values of the radial slider thru the  `RSli
 
 A Slider which has a fixed frame but a movable track in the background. Used for values that have a discrete nature to them but would not necessarily fit on screen.
 Both the thumb and track can be dragged, if the track is dragged and thrown the velocity of the throw is added to the tracks velocity and it slows gradually to a stop.
-If the thumb is currently being dragged and reaches the minimum or maximum value of its bounds, velocity is added to the track in the opposite direction of the drag. 
+If the thumb is currently being dragged and reaches the minimum or maximum value of its bounds, velocity is added to the track in the opposite direction of the drag.
 
 - **parameters**:
     - `value`: `Binding<Double>` The value the slider should control
@@ -219,12 +219,12 @@ If the thumb is currently being dragged and reaches the minimum or maximum value
 
 
 ## Styling The Slider
- 
+
   To create a custom style for the slider you need to create a `OverflowSliderStyle` conforming struct. Conformance requires implementation of 2 methods
-  
+
  1. `makeThumb`: which creates the draggable portion of the slider
  2. `makeTrack`: which creates the draggable background track
- 
+
   Both methods provide access to the sliders current state thru the `OverflowSliderConfiguration` of the `OverflowSlider `to be styled.
  ````Swift
   struct OverflowSliderConfiguration {
@@ -270,7 +270,7 @@ Essentially the 2D equaivalent of a normal `Slider`, This creates a draggable th
 
 ### Styling
  To create a custom style for the `TrackPad` you need to create a `TrackPadStyle` conforming struct. Conformance requires implementation of 2 methods
- 
+
  1.  `makeThumb`: which creates the draggable portion of the trackpad
  2.  `makeTrack`: which creates view containing the thumb
 
@@ -288,12 +288,12 @@ Essentially the 2D equaivalent of a normal `Slider`, This creates a draggable th
       let minY: Double // The minimum value from rangeY
       let maxY: Double // The maximum value from rangeY
   }
-  
+
 ````
 
 To make this easier just copy and paste the following style based on the `DefaultTrackPadStyle`. After creating your custom style
 apply it by calling the `trackPadStyle` method on the `TrackPad` or a view containing it.
- 
+
   ````Swift
   struct <#My TrackPad Style #>: TrackPadStyle {
       func makeThumb(configuration:  TrackPadConfiguration) -> some View {
@@ -353,7 +353,7 @@ struct <#My RadialPad Style#>: RadialPadStyle {
             .frame(width: 45, height: 45)
     }
 }
-```` 
+````
 
 ## Joystick
 
@@ -370,7 +370,7 @@ struct <#My RadialPad Style#>: RadialPadStyle {
 
  The Joystick can be themed and styled by making a custom struct conforming to the `JoystickStyle`
  protocol. Conformance requires that you implement 4 methods
- 
+
  1.  `makeHitBox` - Creates the rectangular region that responds the the users touch
  2. `makeLockBox` - Creates a view such that if the drag gestures location is contained within the lockbox, the joystick goes into the locked state
  3.  `makeTrack` - Creates the circular track that contains the joystick thumb
