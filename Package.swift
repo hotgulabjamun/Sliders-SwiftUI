@@ -13,9 +13,9 @@ let package = Package(
             targets: ["SwiftUI-Sliders"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/hotgulabjamun/CGExtender.git", from: "1.0.1"),
-        .package(url: "https://github.com/hotgulabjamun/SwiftUI-Shapes.git", from: "1.0.0"),
-        .package(url: "https://github.com/hotgulabjamun/SwiftUI-bez.git", from: "1.0.0")
+        .package(url: "https://github.com/hotgulabjamun/CGExtender.git", .branch("master")),
+        .package(url: "https://github.com/hotgulabjamun/SwiftUI-Shapes.git", .branch("master")),
+        .package(url: "https://github.com/hotgulabjamun/SwiftUI-bez.git", .branch("master")),
         // Dependencies declare other packages that this package depends on.
         // .package(url: /* package url */, from: "1.0.0"),
     ],
