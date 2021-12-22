@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import Shapes
+import SwiftUI_Shapes
 
 @available(iOS 13.0, macOS 10.15, watchOS 6.0 , *)
 public struct OverflowSliderConfiguration {
@@ -34,7 +34,7 @@ public struct OverflowSliderConfiguration {
 public protocol OverflowSliderStyle {
     associatedtype Track: View
     associatedtype Thumb: View
-    
+
     func makeTrack(configuration: OverflowSliderConfiguration) -> Self.Track
     func makeThumb(configuration: OverflowSliderConfiguration) -> Self.Thumb
 }
@@ -57,7 +57,7 @@ public struct AnyOverflowSliderStyle: OverflowSliderStyle {
     public func makeThumb(configuration: OverflowSliderConfiguration) -> some View {
         return self._makeThumb(configuration)
     }
-    
+
     init<S: OverflowSliderStyle>(_ style: S) {
         self._makeTrack = style.makeTrackTypeErased
         self._makeThumb = style.makeThumbTypeErased
@@ -65,11 +65,11 @@ public struct AnyOverflowSliderStyle: OverflowSliderStyle {
 }
 @available(iOS 13.0, macOS 10.15, watchOS 6.0 , *)
 public struct DefaultOverflowSliderStyle: OverflowSliderStyle {
-    public init() { } 
+    public init() { }
     public func makeTrack(configuration: OverflowSliderConfiguration) -> some View {
         let totalLength = configuration.max-configuration.min
         let spacing = configuration.tickSpacing
-        
+
         return TickMarks(spacing: CGFloat(spacing), ticks: Int(totalLength/Double(spacing)))
             .stroke(Color.gray)
             .frame(width: CGFloat(totalLength))
@@ -108,7 +108,7 @@ extension View {
 ///
 /// A Slider which has a fixed frame but a movable track in the background. Used for values that have a discrete nature to them but would not necessarily fit on screen.
 /// Both the thumb and track can be dragged, if the track is dragged and thrown the velocity of the throw is added to the tracks velocity and it slows gradually to a stop.
-/// If the thumb is currently being dragged and reachs the minimum or maximum value of its bounds, velocity is added to the track in the opposite direction of the drag. 
+/// If the thumb is currently being dragged and reachs the minimum or maximum value of its bounds, velocity is added to the track in the opposite direction of the drag.
 ///
 /// - parameters:
 ///     - value: `Binding<Double>` The value the slider should control
@@ -167,21 +167,21 @@ public struct OverflowSlider: View {
     public enum SliderState {
         case inactive
         case dragging(time: Date, translation: CGFloat, startLocation: CGFloat, velocity: CGFloat)
-        
+
         var isDragging: Bool {
             switch self {
             case .dragging(_, _, _, _): return true
             default: return false
             }
         }
-        
+
         var isActive: Bool {
             switch self {
             case .inactive: return false
             default: return true
             }
         }
-        
+
         var time: Date? {
             switch self {
             case .dragging( let time, _ , _, _):
@@ -189,7 +189,7 @@ public struct OverflowSlider: View {
             default: return nil
             }
         }
-        
+
         var translation: CGFloat {
             switch self {
             case .dragging(_, let translation , _, _):
@@ -197,7 +197,7 @@ public struct OverflowSlider: View {
             default: return .zero
             }
         }
-        
+
         var startLocation: CGFloat? {
             switch self {
             case .dragging(_, _ , let start, _):
@@ -205,8 +205,8 @@ public struct OverflowSlider: View {
             default: return nil
             }
         }
-        
-        
+
+
         var velocity: CGFloat {
             switch self {
             case .dragging(_ , _ , _, let velocity):
@@ -222,19 +222,19 @@ public struct OverflowSlider: View {
     @State private var trackState: SliderState = .inactive
     @State private var trackOffset: CGFloat = 0
     private let timer = Timer.publish(every: 0.01, on: .main, in: .common).autoconnect()
-    
+
     @Binding public var value: Double
     public let range: ClosedRange<Double>
     public let spacing: Double
     public var isDisabled: Bool = false
-    
+
     public init(value: Binding<Double>, range: ClosedRange<Double>, spacing: Double, isDisabled: Bool) {
         self._value = value
         self.range = range
         self.spacing = spacing
         self.isDisabled = isDisabled
     }
-    
+
     private var configuration: OverflowSliderConfiguration {
         .init(isDisabled: isDisabled,
               thumbIsActive: thumbState != 0,
@@ -246,7 +246,7 @@ public struct OverflowSlider: View {
               max: range.upperBound,
               tickSpacing: spacing)
     }
-    
+
     private func thumbHandler() {
         if self.thumbState != 0 {
             if self.thumbOffset + self.thumbState > 1 {
@@ -287,9 +287,9 @@ public struct OverflowSlider: View {
                         if !self.trackState.isActive {
                             self.trackOffset -= self.currentVelocity*0.01
                         }
-                        
+
                         self.thumbHandler()
-                        
+
                         // Update value
                         self.value = max(min(Double(-(self.trackState.translation + self.trackOffset) + (proxy.size.width-rect.width)*(self.thumbState + self.thumbOffset)), self.range.upperBound), self.range.lowerBound)
                 }.onAppear {
@@ -297,7 +297,7 @@ public struct OverflowSlider: View {
                 }
             })
     }
-    
+
     private func calculateVelocity(translation: CGFloat, time: Date) -> CGFloat {
         guard let last = trackState.time else {return .zero}
         let dx = translation-trackState.translation
@@ -321,12 +321,12 @@ public struct OverflowSlider: View {
                         self.trackState = .inactive
                         self.trackOffset += value.translation.width
                         self.trackOffset = max(min(self.trackOffset, CGFloat(-self.range.lowerBound)+proxy.size.width/2), CGFloat(-self.range.upperBound)+proxy.size.width/2)
-                        
+
                     }))
             .animation(.linear)
-        
+
     }
-    
+
     public var body: some View {
         RoundedRectangle(cornerRadius: 5)
             .fill(Color.white.opacity(0.001))

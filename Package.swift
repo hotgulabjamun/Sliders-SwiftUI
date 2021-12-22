@@ -13,9 +13,15 @@ let package = Package(
             targets: ["SwiftUI-Sliders"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/hotgulabjamun/CGExtender.git", .branch("master")),
-        .package(url: "https://github.com/hotgulabjamun/SwiftUI-Shapes.git", .branch("master")),
-        .package(url: "https://github.com/hotgulabjamun/SwiftUI-bez.git", .branch("master")),
+//        .package(url: "https://github.com/hotgulabjamun/CGExtender.git", .branch("master")),
+//        .package(url: "https://github.com/hotgulabjamun/SwiftUI-Shapes.git", .branch("master")),
+//        .package(url: "https://github.com/hotgulabjamun/SwiftUI-bez.git", .branch("master")),
+
+			.package(url: "https://github.com/hotgulabjamun/Swiftui-Sliders.git" , .branch("master")),
+		.package(url: "https://github.com/hotgulabjamun/Swiftui-Shapes.git", .branch("master")),
+		.package(url: "https://github.com/hotgulabjamun/SwiftUI-bez.git", .branch("master")),
+		.package(url: "https://github.com/hotgulabjamun/CGExtender.git", .branch("master")),
+
         // Dependencies declare other packages that this package depends on.
         // .package(url: /* package url */, from: "1.0.0"),
     ],
@@ -24,7 +30,9 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages which this package depends on.
         .target(
             name: "SwiftUI-Sliders",
-            dependencies: ["CGExtender", "SwiftUI-Shapes", "SwiftUI-bez"]),
+//            dependencies: ["CGExtender", "SwiftUI-Shapes", "SwiftUI-bez"]
+			dependencies: ["CGExtender", .product(name: "SwiftUI-Sliders", package: "Swiftui-Sliders"), .product(name: "SwiftUI-Shapes", package: "Swiftui-Shapes"), "SwiftUI-bez"]
+		)
         // .testTarget(
         //     name: "SlidersTests",
         //     dependencies: ["Sliders"]),

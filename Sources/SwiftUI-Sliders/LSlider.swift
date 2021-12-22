@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import Shapes
+import SwiftUI_Shapes
 import CGExtender
 
 
@@ -23,7 +23,7 @@ public struct LSliderConfiguration {
     public let pctFill: Double
     /// The current value of the slider
     public let value: Double
-    /// Angle of the slider 
+    /// Angle of the slider
     public let angle: Angle
     /// The minimum value of the sliders range
     public let min: Double
@@ -35,7 +35,7 @@ public struct LSliderConfiguration {
 public protocol LSliderStyle {
     associatedtype Thumb: View
     associatedtype Track: View
-    
+
     func makeThumb(configuration:  LSliderConfiguration) -> Self.Thumb
     func makeTrack(configuration:  LSliderConfiguration) -> Self.Track
 }
@@ -58,7 +58,7 @@ public struct AnyLSliderStyle: LSliderStyle {
     public func makeTrack(configuration: LSliderConfiguration) -> some View  {
         self._makeTrack(configuration)
     }
-    
+
     public init<S: LSliderStyle>(_ style: S) {
         self._makeThumb = style.makeThumbTypeErased
         self._makeTrack = style.makeTrackTypeErased
@@ -89,14 +89,14 @@ extension View {
 @available(iOS 13.0, macOS 10.15, watchOS 6.0 , *)
 public struct DefaultLSliderStyle: LSliderStyle {
     public init() {
-        
+
     }
     public func makeThumb(configuration:  LSliderConfiguration) -> some View {
         Circle()
             .fill(configuration.isActive ? Color.yellow : Color.white)
             .frame(width: 40, height: 40)
     }
-    
+
     public func makeTrack(configuration:  LSliderConfiguration) -> some View {
         let style: StrokeStyle = .init(lineWidth: 40, lineCap: .round, lineJoin: .round, miterLimit: 0, dash: [], dashPhase: 0)
         return AdaptiveLine(angle: configuration.angle)
@@ -118,7 +118,7 @@ public struct DefaultLSliderStyle: LSliderStyle {
 ///     - value: `Binding<Double>` The value the slider should control
 ///     - range: `ClosedRange<Double>` The minimum and maximum numbers that `value` can be
 ///     - angle: `Angle` The angle you would like the slider to be at
-///     - isDisabled: `Bool` Whether or not the slider should be disabled 
+///     - isDisabled: `Bool` Whether or not the slider should be disabled
 ///
 /// ## Styling The Slider
 ///
@@ -157,7 +157,7 @@ public struct DefaultLSliderStyle: LSliderStyle {
 ///                    .overlay(AdaptiveLine(angle: configuration.angle).trim(from: 0, to: CGFloat(configuration.pctFill)).stroke(Color.blue, style: style))
 ///            }
 ///        }
-///        
+///
 /// ```
 @available(iOS 13.0, macOS 10.15, watchOS 6.0 , *)
 public struct LSlider: View {

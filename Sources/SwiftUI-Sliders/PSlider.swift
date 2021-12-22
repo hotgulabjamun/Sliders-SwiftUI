@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import Shapes
+import SwiftUI_Shapes
 import bez
 
 // MARK: - Configuration
@@ -27,7 +27,7 @@ public struct PSliderConfiguration {
     public let min: Double
     /// The maximum value of the sliders range
     public let max: Double
-    /// The shape of the slider 
+    /// The shape of the slider
     public let shape: AnyShape
 }
 // MARK: - Style
@@ -35,7 +35,7 @@ public struct PSliderConfiguration {
 public protocol PSliderStyle {
     associatedtype Thumb: View
     associatedtype Track: View
-    
+
     func makeThumb(configuration:  PSliderConfiguration) -> Self.Thumb
     func makeTrack(configuration:  PSliderConfiguration) -> Self.Track
 }
@@ -88,7 +88,7 @@ extension View {
 @available(iOS 13.0, macOS 10.15, watchOS 6.0 , *)
 public struct DefaultPSliderStyle: PSliderStyle {
     public init() {}
-    
+
     public func makeThumb(configuration:  PSliderConfiguration) -> some View {
         Circle()
             .frame(width: 30, height:30)
@@ -108,7 +108,7 @@ public struct DefaultPSliderStyle: PSliderStyle {
 
 
 /// # Path Slider
-/// A View that turns any `Shape` into a slider. Its great for creating unique user experiences 
+/// A View that turns any `Shape` into a slider. Its great for creating unique user experiences
 ///
 /// - parameters:
 ///     - value: a `Binding<Double>` value which represents the percent fill of the slider between  (0,1).
@@ -161,7 +161,7 @@ public struct PSlider<S: Shape>: View {
     enum DragState {
         case inactive
         case dragging(translation: CGSize)
-        
+
         var translation: CGSize {
             switch self {
             case .inactive:
@@ -170,7 +170,7 @@ public struct PSlider<S: Shape>: View {
                 return translation
             }
         }
-        
+
         var isActive: Bool {
             switch self {
             case .inactive:
@@ -182,13 +182,13 @@ public struct PSlider<S: Shape>: View {
     }
     @Environment(\.pathSliderStyle) private var style: AnyPSliderStyle
     private let space: String = "Follow"
-    
+
     @State private var dragState: DragState = .inactive
     @Binding public var value: Double
     public var shape: S
     public var range: ClosedRange<Double>
     public var isDisabled: Bool
-    
+
     public init(_ value: Binding<Double>, shape: S) {
         self._value = value
         self.shape = shape
@@ -213,9 +213,9 @@ public struct PSlider<S: Shape>: View {
         self.isDisabled = isDisabled
         self.range = 0...1
     }
-    
+
     struct PThumb: View {
-        
+
         @State private var position: CGPoint = .zero
         @Environment(\.pathSliderStyle) private var style: AnyPSliderStyle
         private let space: String = "Follow"
@@ -225,14 +225,14 @@ public struct PSlider<S: Shape>: View {
         public let range: ClosedRange<Double>
         public let isDisabled: Bool
         public let shape: AnyShape
-        
+
         func getDisplacement(closestPoint: CGPoint) -> CGSize {
             return CGSize(width: closestPoint.x - position.x, height: closestPoint.y - position.y)
         }
         func calculateDirection(_ pt1: CGPoint, _ pt2: CGPoint) -> Angle {
             let a = pt2.x - pt1.x
             let b = pt2.y - pt1.y
-            
+
             let angle = a < 0 ? atan(Double(b / a)) : atan(Double(b / a)) - Double.pi
             return Angle(radians: angle)
         }
@@ -257,7 +257,7 @@ public struct PSlider<S: Shape>: View {
                   max: range.upperBound,
                   shape: shape)
         }
-        
+
         var body: some View {
             style
                 .makeThumb(configuration: self.configuration)
@@ -287,7 +287,7 @@ public struct PSlider<S: Shape>: View {
         }
         }
     }
-    
+
     private func makeThumb(_ proxy: GeometryProxy) -> some View {
         let rect = proxy.frame(in: .global) != .zero ? proxy.frame(in: .local) : CGRect(x: 0, y: 0, width: 100, height: 100)
         return PThumb(dragState: $dragState,
@@ -297,7 +297,7 @@ public struct PSlider<S: Shape>: View {
                       isDisabled: self.isDisabled,
                       shape: AnyShape(shape))
     }
-    
+
     var configuration: PSliderConfiguration {
         .init(isDisabled: isDisabled,
               isActive: dragState.isActive,
@@ -308,7 +308,7 @@ public struct PSlider<S: Shape>: View {
               max: range.upperBound,
               shape: AnyShape(shape))
     }
-    
+
     public var body: some View {
         GeometryReader { proxy in
             self.style.makeTrack(configuration: self.configuration)
