@@ -8,7 +8,7 @@
 
 import SwiftUI
 import SwiftUI_Shapes
-import SwiftUI-bez
+import SwiftUI_bez
 
 // MARK: - Configuration
 @available(iOS 13.0, macOS 10.15, watchOS 6.0 , *)
